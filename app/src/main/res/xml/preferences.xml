@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:key="pref_num_to_call"
+        android:title="@string/pref_num_to_call_title"
+        android:summary="@string/pref_num_to_call_summ"
+        android:dialogTitle="@string/pref_num_to_call_dialog_title"
+        android:defaultValue="@string/pref_num_to_call_default" />
+
+    <EditTextPreference
+        android:key="pref_geofence_radius"
+        android:title="@string/pref_geofence_radius_title"
+        android:inputType="number"
+        android:summary="@string/pref_geofence_radius_summ"
+        android:dialogTitle="@string/pref_geofence_radius_dialog_title"
+        android:defaultValue="@string/pref_geofence_radius_default" />
+
+    <EditTextPreference
+        android:key="pref_update_interval"
+        android:title="@string/pref_update_interval_title"
+        android:inputType="number"
+        android:summary="@string/pref_update_interval_summ"
+        android:dialogTitle="@string/pref_update_interval_dialog_title"
+        android:defaultValue="@string/pref_update_interval_default" />
+
+
+
+</PreferenceScreen>

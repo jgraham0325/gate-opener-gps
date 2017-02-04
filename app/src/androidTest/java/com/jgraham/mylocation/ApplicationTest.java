@@ -1,4 +1,4 @@
-package com.tinmegali.mylocation;
+package com.jgraham.mylocation;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

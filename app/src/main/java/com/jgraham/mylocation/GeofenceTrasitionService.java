@@ -1,4 +1,4 @@
-package com.tinmegali.mylocation;
+package com.jgraham.mylocation;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -7,7 +7,10 @@ import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
@@ -42,8 +45,9 @@ public class GeofenceTrasitionService extends IntentService {
 
         int geoFenceTransition = geofencingEvent.getGeofenceTransition();
         // Check if the transition type is of interest
-        if ( geoFenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER ||
-                geoFenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT ) {
+        if ( geoFenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER  ) {
+            // Disabled exit condition Jan 2017: ||    geoFenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT
+
             // Get the geofence that were triggered
             List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();
 
@@ -51,6 +55,28 @@ public class GeofenceTrasitionService extends IntentService {
 
             // Send notification details as a String
             sendNotification( geofenceTransitionDetails );
+
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+            String rawNumberToDial = sharedPref.getString(SettingsActivity.KEY_PREF_NUM_TO_CALL, "");
+
+            callPhone(rawNumberToDial);
+        }
+
+
+    }
+
+    private void callPhone(String rawNumberToDial) {
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        //flag needed since it's called from outside main activity
+        callIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //uri encoding needed to deal with hash character
+        String numberToDial = String.format("tel:%s", Uri.encode(rawNumberToDial));
+        callIntent.setData(Uri.parse(numberToDial));
+        try {
+            startActivity(callIntent);
+        }
+        catch (SecurityException e){
+            Log.e(TAG,"Missing permissions for calling",e);
         }
     }
 

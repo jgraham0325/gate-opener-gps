@@ -3,4 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto" >
     <item android:id="@+id/geofence" android:title="Create Geofence" app:showAsAction="never" />
     <item android:id="@+id/clear" android:title="Clear Geofence" app:showAsAction="never" />
+    <item android:id="@+id/call" android:title="Open Now" app:showAsAction="never" />
+    <item android:id="@+id/settings" android:title="Settings" app:showAsAction="never" />
 </menu>

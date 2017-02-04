@@ -1,4 +1,4 @@
-package com.tinmegali.mylocation;
+package com.jgraham.mylocation;
 
 import android.Manifest;
 import android.app.PendingIntent;
@@ -8,17 +8,20 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -41,6 +44,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import static com.jgraham.mylocation.R.id.geofence;
+
 public class MainActivity extends AppCompatActivity
         implements
             GoogleApiClient.ConnectionCallbacks,
@@ -52,6 +57,9 @@ public class MainActivity extends AppCompatActivity
             ResultCallback<Status> {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    static final Integer CALL = 0x1;
+    static final Integer SETTINGS = 0x2;
+    public static final String PREFS_NAME = "MyPrefsFile";
 
     private GoogleMap map;
     private GoogleApiClient googleApiClient;
@@ -60,6 +68,8 @@ public class MainActivity extends AppCompatActivity
     private TextView textLat, textLong;
 
     private MapFragment mapFragment;
+
+
 
     private static final String NOTIFICATION_MSG = "NOTIFICATION MSG";
     // Create a Intent send by the notification
@@ -121,12 +131,21 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch ( item.getItemId() ) {
-            case R.id.geofence: {
+            case geofence: {
                 startGeofence();
                 return true;
             }
             case R.id.clear: {
                 clearGeofence();
+                return true;
+            }
+            case R.id.call: {
+                makeOpenGateCall();
+                return true;
+            }
+            case R.id.settings: {
+                Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivityForResult(i,SETTINGS);
                 return true;
             }
         }
@@ -140,7 +159,10 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "checkPermission()");
         // Ask for permission if it wasn't granted yet
         return (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED );
+                == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
+                        == PackageManager.PERMISSION_GRANTED
+        );
     }
 
     // Asks for permission
@@ -148,7 +170,7 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "askPermission()");
         ActivityCompat.requestPermissions(
                 this,
-                new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
+                new String[] { Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE },
                 REQ_PERMISSION
         );
     }
@@ -210,16 +232,21 @@ public class MainActivity extends AppCompatActivity
     private LocationRequest locationRequest;
     // Defined in mili seconds.
     // This number in extremely low, and should be used only for debug
-    private final int UPDATE_INTERVAL =  1000;
-    private final int FASTEST_INTERVAL = 900;
+    //private final int UPDATE_INTERVAL =  1000;
+    //private final int FASTEST_INTERVAL = 900;
 
     // Start location Updates
     private void startLocationUpdates(){
         Log.i(TAG, "startLocationUpdates()");
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        //setting is in seconds, interval required here is millis so times by 1000
+        long settingText = 1000 * Long.parseLong(sharedPref.getString(SettingsActivity.KEY_PREF_UPDATE_INTERVAL,"100"));
+
         locationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(UPDATE_INTERVAL)
-                .setFastestInterval(FASTEST_INTERVAL);
+                .setInterval(settingText)
+                .setFastestInterval(settingText);
 
         if ( checkPermission() )
             LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
@@ -323,7 +350,9 @@ public class MainActivity extends AppCompatActivity
     private void startGeofence() {
         Log.i(TAG, "startGeofence()");
         if( geoFenceMarker != null ) {
-            Geofence geofence = createGeofence( geoFenceMarker.getPosition(), GEOFENCE_RADIUS );
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+            float settingText = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_GEOFENCE_RADIUS,"100"));
+            Geofence geofence = createGeofence( geoFenceMarker.getPosition(), settingText );
             GeofencingRequest geofenceRequest = createGeofenceRequest( geofence );
             addGeofence( geofenceRequest );
         } else {
@@ -331,9 +360,10 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private static final long GEO_DURATION = 60 * 60 * 1000;
+    //private static final long GEO_DURATION = 60 * 60 * 1000;
+    private static final long GEO_DURATION = Geofence.NEVER_EXPIRE;
     private static final String GEOFENCE_REQ_ID = "My Geofence";
-    private static final float GEOFENCE_RADIUS = 500.0f; // in meters
+    //private static final float GEOFENCE_RADIUS = 100.0f; // in meters
 
     // Create a Geofence
     private Geofence createGeofence( LatLng latLng, float radius ) {
@@ -398,11 +428,14 @@ public class MainActivity extends AppCompatActivity
         if ( geoFenceLimits != null )
             geoFenceLimits.remove();
 
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        float setting = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_GEOFENCE_RADIUS,"100"));
+
         CircleOptions circleOptions = new CircleOptions()
                 .center( geoFenceMarker.getPosition())
                 .strokeColor(Color.argb(50, 70,70,70))
                 .fillColor( Color.argb(100, 150,150,150) )
-                .radius( GEOFENCE_RADIUS );
+                .radius( setting );
         geoFenceLimits = map.addCircle( circleOptions );
     }
 
@@ -451,12 +484,48 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    // Call number to open gate
+    private void makeOpenGateCall() {
+        Log.d(TAG, "makeOpenGateCall()");
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String rawNumberToDial = sharedPref.getString(SettingsActivity.KEY_PREF_NUM_TO_CALL, "");
+        String numberToDial = String.format("tel:%s", Uri.encode(rawNumberToDial));
+        callIntent.setData(Uri.parse(numberToDial));
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            askForPermission(Manifest.permission.CALL_PHONE,CALL);
+        }
+        startActivity(callIntent);
+
+
+    }
+
     private void removeGeofenceDraw() {
         Log.d(TAG, "removeGeofenceDraw()");
         if ( geoFenceMarker != null)
             geoFenceMarker.remove();
         if ( geoFenceLimits != null )
             geoFenceLimits.remove();
+    }
+
+
+    public void askForPermission(String permission, Integer requestCode) {
+        if (ContextCompat.checkSelfPermission(MainActivity.this, permission) != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, permission)) {
+
+                //This is called if user has denied the permission before
+                //In this case I am just asking the permission again
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{permission}, requestCode);
+
+            } else {
+
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{permission}, requestCode);
+            }
+        } else {
+            Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

@@ -5,11 +5,11 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.tinmegali.mylocation"
+        applicationId "com.jgraham.mylocation"
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "4"
     }
     buildTypes {
         release {

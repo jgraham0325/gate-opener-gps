@@ -1,4 +1,4 @@
-package com.tinmegali.mylocation;
+package com.jgraham.mylocation;
 
 import org.junit.Test;
 

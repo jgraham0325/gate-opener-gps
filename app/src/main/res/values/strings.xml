@@ -1,3 +1,19 @@
 <resources>
-    <string name="app_name">Geofencing</string>
+    <string name="app_name">Gate Opener</string>
+    <string name="pref_num_to_call_title">Number to call</string>
+    <string name="pref_num_to_call_summ">Phone number of gate (use comma after number for additional keypad actions once connected) e.g. 01234567,#</string>
+    <string name="pref_num_to_call_dialog_title">Number to call</string>
+    <string name="pref_num_to_call_default">0123456789,#</string>
+
+    <string name="pref_geofence_radius_title">Geofence radius</string>
+    <string name="pref_geofence_radius_summ">Radius of geofence in meters</string>
+    <string name="pref_geofence_radius_dialog_title">Geofence radius</string>
+    <string name="pref_geofence_radius_default">100</string>
+
+    <string name="pref_update_interval_title">Update Interval</string>
+    <string name="pref_update_interval_summ">Frequency of checking location in seconds. Low values will cause rapid battery drain</string>
+    <string name="pref_update_interval_dialog_title">Update Interval</string>
+    <string name="pref_update_interval_default">10</string>
+
+
 </resources>
