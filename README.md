@@ -1,4 +1,4 @@
-# gate-opener-gps
+# Gate Opener GPS
 
 Android application to automatically open up a security gate when you approach
 
@@ -7,7 +7,7 @@ Android application to automatically open up a security gate when you approach
 - User can specify a number to call when entering geofence, including any subsequent keys to be pressed
 
 
-#Usage
+##Usage
 Open in Android Studio
 - Set up virtual device or connect to a physical device
 - Press "run" button
