@@ -1,4 +1,4 @@
-package com.jgraham.mylocation;
+package com.jgraham.gateopener;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

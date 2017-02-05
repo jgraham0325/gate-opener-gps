@@ -1,4 +1,4 @@
-package com.jgraham.mylocation.services;
+package com.jgraham.gateopener.services;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -18,9 +18,9 @@ import android.util.Log;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofenceStatusCodes;
 import com.google.android.gms.location.GeofencingEvent;
-import com.jgraham.mylocation.activities.MainActivity;
-import com.jgraham.mylocation.R;
-import com.jgraham.mylocation.activities.SettingsActivity;
+import com.jgraham.gateopener.activities.MainActivity;
+import com.jgraham.gateopener.R;
+import com.jgraham.gateopener.activities.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.List;

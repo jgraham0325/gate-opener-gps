@@ -1,10 +1,10 @@
-package com.jgraham.mylocation.activities;
+package com.jgraham.gateopener.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
-import com.jgraham.mylocation.R;
+import com.jgraham.gateopener.R;
 
 /**
  * Created by James on 03/02/2017.

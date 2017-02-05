@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Gate Opener</string>
+    <string name="app_name">Gate Opener GPS</string>
 
     <!-- Settings screen -->
     <string name="pref_num_to_call_title">Number to call</string>
@@ -7,9 +7,9 @@
     <string name="pref_num_to_call_dialog_title">Number to call</string>
     <string name="pref_num_to_call_default">0123456789,#</string>
 
-    <string name="pref_geofence_radius_title">Geofence radius</string>
-    <string name="pref_geofence_radius_summ">Radius of geofence in meters</string>
-    <string name="pref_geofence_radius_dialog_title">Geofence radius</string>
+    <string name="pref_geofence_radius_title">Trigger area radius</string>
+    <string name="pref_geofence_radius_summ">Measured in meters</string>
+    <string name="pref_geofence_radius_dialog_title">Trigger area radius</string>
     <string name="pref_geofence_radius_default">100</string>
 
     <string name="pref_update_interval_title">Update Interval</string>
@@ -22,9 +22,9 @@
     <string name="longitude">Long:</string>
 
     <!-- Settings Menu -->
-    <string name="create_new_area">Create Trigger Area</string>
-    <string name="clear_area">Clear Trigger Area</string>
-    <string name="open_now">Open Gate Now</string>
+    <string name="create_new_area">Create trigger area</string>
+    <string name="clear_area">Clear trigger area</string>
+    <string name="open_now">Open gate now</string>
     <string name="settings">Settings</string>
 
 

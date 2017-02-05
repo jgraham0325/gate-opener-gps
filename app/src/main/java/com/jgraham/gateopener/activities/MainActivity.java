@@ -1,4 +1,4 @@
-package com.jgraham.mylocation.activities;
+package com.jgraham.gateopener.activities;
 
 import android.Manifest;
 import android.app.PendingIntent;
@@ -43,10 +43,10 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.jgraham.mylocation.R;
-import com.jgraham.mylocation.services.GeofenceTrasitionService;
+import com.jgraham.gateopener.R;
+import com.jgraham.gateopener.services.GeofenceTrasitionService;
 
-import static com.jgraham.mylocation.R.id.geofence;
+import static com.jgraham.gateopener.R.id.geofence;
 
 public class MainActivity extends AppCompatActivity
         implements

@@ -1,10 +1,10 @@
-package com.jgraham.mylocation.receivers;
+package com.jgraham.gateopener.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.jgraham.mylocation.services.GeofenceTrasitionService;
+import com.jgraham.gateopener.services.GeofenceTrasitionService;
 
 /**
  * Created by James on 04/02/2017.
