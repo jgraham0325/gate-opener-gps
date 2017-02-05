@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:orientation="vertical"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.jgraham.mylocation.MainActivity">
+    tools:context="com.jgraham.mylocation.activities.MainActivity">
 
     <!-- Line with Latitude and Longitude -->
     <LinearLayout
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:layout_weight="0.5"
-            android:text="Lat: " />
+            android:text="@string/latitude" />
 
         <!--Longitude-->
         <TextView
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:layout_weight="0.5"
-            android:text="Long: " />
+            android:text="@string/longitude" />
     </LinearLayout>
 
     <!--GoogleMap fragment-->

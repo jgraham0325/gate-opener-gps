@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Gate Opener</string>
+
+    <!-- Settings screen -->
     <string name="pref_num_to_call_title">Number to call</string>
     <string name="pref_num_to_call_summ">Phone number of gate (use comma after number for additional keypad actions once connected) e.g. 01234567,#</string>
     <string name="pref_num_to_call_dialog_title">Number to call</string>
@@ -14,6 +16,16 @@
     <string name="pref_update_interval_summ">Frequency of checking location in seconds. Low values will cause rapid battery drain</string>
     <string name="pref_update_interval_dialog_title">Update Interval</string>
     <string name="pref_update_interval_default">10</string>
+
+    <!-- Main map screen -->
+    <string name="latitude">Lat:</string>
+    <string name="longitude">Long:</string>
+
+    <!-- Settings Menu -->
+    <string name="create_new_area">Create Trigger Area</string>
+    <string name="clear_area">Clear Trigger Area</string>
+    <string name="open_now">Open Gate Now</string>
+    <string name="settings">Settings</string>
 
 
 </resources>

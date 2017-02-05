@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
-    <item android:id="@+id/geofence" android:title="Create Geofence" app:showAsAction="never" />
-    <item android:id="@+id/clear" android:title="Clear Geofence" app:showAsAction="never" />
-    <item android:id="@+id/call" android:title="Open Now" app:showAsAction="never" />
-    <item android:id="@+id/settings" android:title="Settings" app:showAsAction="never" />
+    <item android:id="@+id/geofence" android:title="@string/create_new_area" app:showAsAction="never" />
+    <item android:id="@+id/clear" android:title="@string/clear_area" app:showAsAction="never" />
+    <item android:id="@+id/call" android:title="@string/open_now" app:showAsAction="never" />
+    <item android:id="@+id/settings" android:title="@string/settings" app:showAsAction="never" />
 </menu>

@@ -1,4 +1,4 @@
-package com.jgraham.mylocation;
+package com.jgraham.mylocation.services;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -18,6 +18,9 @@ import android.util.Log;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofenceStatusCodes;
 import com.google.android.gms.location.GeofencingEvent;
+import com.jgraham.mylocation.activities.MainActivity;
+import com.jgraham.mylocation.R;
+import com.jgraham.mylocation.activities.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +57,7 @@ public class GeofenceTrasitionService extends IntentService {
             String geofenceTransitionDetails = getGeofenceTrasitionDetails(geoFenceTransition, triggeringGeofences );
 
             // Send notification details as a String
-            sendNotification( geofenceTransitionDetails );
+            // sendNotification( geofenceTransitionDetails );
 
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
             String rawNumberToDial = sharedPref.getString(SettingsActivity.KEY_PREF_NUM_TO_CALL, "");

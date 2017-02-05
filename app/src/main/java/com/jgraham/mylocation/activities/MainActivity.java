@@ -1,4 +1,4 @@
-package com.jgraham.mylocation;
+package com.jgraham.mylocation.activities;
 
 import android.Manifest;
 import android.app.PendingIntent;
@@ -43,6 +43,8 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.jgraham.mylocation.R;
+import com.jgraham.mylocation.services.GeofenceTrasitionService;
 
 import static com.jgraham.mylocation.R.id.geofence;
 
